@@ -127,7 +127,7 @@
     "semantic-ui-css": "^2.2.2",
     "simulant": "^0.2.2",
     "sinon": "^1.17.3",
-    "sinon-chai": "^2.8.0",
+    "sinon-chai": "^2.9.0",
     "style-loader": "^0.14.0",
     "ta-scripts": "^2.5.2",
     "through2": "^2.0.2",

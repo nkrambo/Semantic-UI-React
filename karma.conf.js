@@ -47,25 +47,15 @@ module.exports = (karmaConfig) => {
     preprocessors: {
       // do not include 'coverage' preprocessor for karma-coverage
       // code is already instrumented by babel-plugin-__coverage__
-      './test/tests.bundle.js': ['webpack', 'sourcemap'],
+      './test/tests.bundle.js': ['webpack'],
     },
     singleRun: !argv.watch,
     webpack: {
       devtool: config.compiler_devtool,
-      entry: './test/tests.bundle.js',
-      module: {
-        rules: [
-          ...webpackConfig.module.rules,
-          {
-            test: /sinon\.js$/,
-            loader: 'imports-loader?define=>false,require=>false',
-          },
-        ],
-      },
+      module: webpackConfig.module,
       plugins: webpackConfig.plugins,
       resolve: Object.assign({}, webpackConfig.resolve, {
         alias: Object.assign({}, webpackConfig.resolve.alias, {
-          sinon: 'sinon/pkg/sinon',
           // These are internal deps specific to React 0.13 required() by enzyme
           // They shouldn't be requiring these at all, issues and fix proposed
           // https://github.com/airbnb/enzyme/issues/285

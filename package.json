@@ -124,7 +124,7 @@
     "require-dir": "^0.3.0",
     "rimraf": "^2.5.2",
     "sass-loader": "^4.0.2",
-    "semantic-ui-css": "^2.2.2",
+    "semantic-ui-css": "^2.2.10",
     "simulant": "^0.2.2",
     "sinon": "^2.1.0",
     "sinon-chai": "^2.9.0",

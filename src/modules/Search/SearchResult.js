@@ -1,5 +1,6 @@
 import cx from 'classnames'
-import React, { Component, PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React, { Component } from 'react'
 
 import {
   createHTMLImage,
@@ -41,7 +42,10 @@ export default class SearchResult extends Component {
     description: PropTypes.string,
 
     /** A unique identifier. */
-    id: PropTypes.number,
+    id: PropTypes.oneOfType([
+      PropTypes.number,
+      PropTypes.string,
+    ]),
 
     /** Add an image to the item. */
     image: PropTypes.string,

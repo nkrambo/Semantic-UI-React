@@ -2,21 +2,23 @@ import * as React from 'react';
 
 import {
   SemanticFLOATS,
+  SemanticShorthandItem,
   SemanticSIZES,
   SemanticVERTICALALIGNMENTS,
   SemanticWIDTHS
 } from '../..';
+import { DimmerProps } from '../../modules/Dimmer';
 import { LabelProps } from '../Label';
 import ImageGroup from './ImageGroup';
 
 export interface ImageProps {
   [key: string]: any;
 
-  /** Alternate text for the image specified. */
-  alt?: string;
-
   /** An element type to render as (string or function). */
   as?: any;
+
+  /** Alternate text for the image specified. */
+  alt?: string;
 
   /** An image may be formatted to appear inline with text as an avatar. */
   avatar?: boolean;
@@ -27,6 +29,9 @@ export interface ImageProps {
   /** An image can appear centered in a content block. */
   centered?: boolean;
 
+  /** Primary content. */
+  children?: React.ReactNode;
+
   /** Additional classes. */
   className?: string;
 
@@ -34,7 +39,7 @@ export interface ImageProps {
   disabled?: boolean;
 
   /** Shorthand for Dimmer. */
-  dimmer?: any;
+  dimmer?: SemanticShorthandItem<DimmerProps>;
 
   /** An image can sit to the left or right of other content. */
   floated?: SemanticFLOATS;
@@ -43,7 +48,10 @@ export interface ImageProps {
   fluid?: boolean;
 
   /** The img element height attribute. */
-  height?: string|number;
+  height?: string | number;
+
+  /** An image can be hidden. */
+  hidden?: boolean;
 
   /** Renders the Image as an <a> tag with this href. */
   href?: string;
@@ -52,7 +60,7 @@ export interface ImageProps {
   inline?: boolean;
 
   /** Shorthand for Label. */
-  label?: any | LabelProps;
+  label?: SemanticShorthandItem<LabelProps>;
 
   /** An image may appear rounded or circular. */
   shape?: 'rounded'|'circular';

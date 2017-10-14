@@ -88,6 +88,28 @@ describe('Progress', () => {
     })
   })
 
+  describe('data-percent', () => {
+    it('adds prop by default', () => {
+      shallow(<Progress />)
+        .should.have.data('percent')
+    })
+
+    it('passes value of percent prop', () => {
+      shallow(<Progress percent={10} />)
+        .should.have.data('percent', 10)
+    })
+
+    it('floors the value of percent prop', () => {
+      shallow(<Progress percent={8.28} />)
+        .should.have.data('percent', 8)
+    })
+
+    it('floors the results value and total props', () => {
+      shallow(<Progress value={828} total={10000} />)
+        .should.have.data('percent', 8)
+    })
+  })
+
   describe('indicating', () => {
     it('adds the "active" class', () => {
       shallow(<Progress indicating />)

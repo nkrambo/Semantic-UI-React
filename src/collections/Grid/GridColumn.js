@@ -1,8 +1,10 @@
 import cx from 'classnames'
-import React, { PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React from 'react'
 
 import {
   customPropTypes,
+  createShorthandFactory,
   getElementType,
   getUnhandledProps,
   META,
@@ -110,5 +112,7 @@ GridColumn.propTypes = {
   /** Represents width of column. */
   width: PropTypes.oneOf(SUI.WIDTHS),
 }
+
+GridColumn.create = createShorthandFactory(GridColumn, children => ({ children }))
 
 export default GridColumn

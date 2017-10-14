@@ -1,9 +1,10 @@
 import cx from 'classnames'
-import _ from 'lodash'
-import React, { PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React from 'react'
 
 import {
-  createShorthand,
+  childrenUtils,
+  createShorthandFactory,
   customPropTypes,
   getElementType,
   getUnhandledProps,
@@ -21,14 +22,12 @@ function StepContent(props) {
   const rest = getUnhandledProps(StepContent, props)
   const ElementType = getElementType(StepContent, props)
 
-  if (!_.isNil(children)) {
-    return <ElementType {...rest} className={classes}>{children}</ElementType>
-  }
+  if (!childrenUtils.isNil(children)) return <ElementType {...rest} className={classes}>{children}</ElementType>
 
   return (
     <ElementType {...rest} className={classes}>
-      {createShorthand(StepTitle, val => ({ title: val }), title)}
-      {createShorthand(StepDescription, val => ({ description: val }), description)}
+      {StepTitle.create(title)}
+      {StepDescription.create(description)}
     </ElementType>
   )
 }
@@ -43,11 +42,11 @@ StepContent.propTypes = {
   /** An element type to render as (string or function). */
   as: customPropTypes.as,
 
-  /** Additional classes. */
-  className: PropTypes.string,
-
   /** Primary content. */
   children: PropTypes.node,
+
+  /** Additional classes. */
+  className: PropTypes.string,
 
   /** Shorthand for StepDescription. */
   description: customPropTypes.itemShorthand,
@@ -55,5 +54,7 @@ StepContent.propTypes = {
   /** Shorthand for StepTitle. */
   title: customPropTypes.itemShorthand,
 }
+
+StepContent.create = createShorthandFactory(StepContent, content => ({ content }))
 
 export default StepContent

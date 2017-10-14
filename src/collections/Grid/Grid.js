@@ -1,5 +1,6 @@
 import cx from 'classnames'
-import React, { PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React from 'react'
 
 import {
   customPropTypes,
@@ -30,6 +31,7 @@ function Grid(props) {
     container,
     divided,
     doubling,
+    inverted,
     padded,
     relaxed,
     reversed,
@@ -44,6 +46,7 @@ function Grid(props) {
     useKeyOnly(centered, 'centered'),
     useKeyOnly(container, 'container'),
     useKeyOnly(doubling, 'doubling'),
+    useKeyOnly(inverted, 'inverted'),
     useKeyOnly(stackable, 'stackable'),
     useKeyOnly(stretched, 'stretched'),
     useKeyOrValueAndKey(celled, 'celled'),
@@ -104,6 +107,9 @@ Grid.propTypes = {
 
   /** A grid can double its column width on tablet and mobile sizes. */
   doubling: PropTypes.bool,
+
+  /** A grid's colors can be inverted. */
+  inverted: PropTypes.bool,
 
   /** A grid can preserve its vertical and horizontal gutters on first and last columns. */
   padded: PropTypes.oneOfType([

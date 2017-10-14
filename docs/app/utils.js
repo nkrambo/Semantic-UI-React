@@ -7,13 +7,21 @@ export const typeOrder = [
   META.TYPES.COLLECTION,
   META.TYPES.VIEW,
   META.TYPES.MODULE,
+  META.TYPES.BEHAVIOR,
   META.TYPES.ADDON,
 ]
 
 export const parentComponents = _.flow(
   _.filter(META.isParent),
-  _.sortBy('_meta.name')
+  _.sortBy('_meta.name'),
 )(semanticUIReact)
+
+const mathSign = Math.sign || function (x) {
+  const val = +x
+
+  if (val === 0 || isNaN(val)) return val
+  return val > 0 ? 1 : -1
+}
 
 /**
  * Get the Webpack Context for all doc site examples.
@@ -27,6 +35,7 @@ export const semanticUICSSRepoURL = 'https://github.com/Semantic-Org/Semantic-UI
 
 export const scrollToAnchor = () => {
   const anchor = location.hash && document.querySelector(location.hash)
+  const offsetY = window.scrollY || window.pageYOffset
 
   // no scroll to target, stop
   if (!anchor) return
@@ -37,11 +46,11 @@ export const scrollToAnchor = () => {
   if (elementTop === 0) return
 
   // hit max scroll boundaries, stop
-  const isScrolledToTop = scrollY === 0
-  const isScrolledToBottom = scrollY + document.body.clientHeight === document.body.scrollHeight
-  const scrollStep = Math.ceil((Math.abs(elementTop / 8))) * Math.sign(elementTop)
+  const isScrolledToTop = offsetY === 0
+  const isScrolledToBottom = offsetY + document.body.clientHeight === document.body.scrollHeight
+  const scrollStep = Math.ceil((Math.abs(elementTop / 8))) * mathSign(elementTop)
 
-  if (isScrolledToBottom && scrollStep > 0 || isScrolledToTop && scrollStep < 0) return
+  if ((isScrolledToBottom && scrollStep > 0) || (isScrolledToTop && scrollStep < 0)) return
 
   // more scrolling to do!
   scrollBy(0, scrollStep)

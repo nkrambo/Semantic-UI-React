@@ -1,6 +1,8 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 import { unmountComponentAtNode } from 'react-dom'
 
+import * as common from 'test/specs/commonTests'
 import { domEvent, sandbox } from 'test/utils'
 import Portal from 'src/addons/Portal/Portal'
 
@@ -24,8 +26,10 @@ describe('Portal', () => {
     if (attachTo) document.body.removeChild(attachTo)
   })
 
+  common.hasValidTypings(Portal)
+
   it('propTypes.children should be required', () => {
-    Portal.propTypes.children.should.equal(React.PropTypes.node.isRequired)
+    Portal.propTypes.children.should.equal(PropTypes.node.isRequired)
   })
 
   it('this.rootNode should be undefined if portal is not open', () => {
@@ -184,7 +188,7 @@ describe('Portal', () => {
     })
 
     it('maintains ref to DOM node with React component', () => {
-      const Component = (props) => <p />
+      const Component = () => <p />
 
       wrapperMount(<Portal open><Component /></Portal>)
       wrapper.instance().portalNode.tagName.should.equal('P')
@@ -258,7 +262,7 @@ describe('Portal', () => {
       wrapperMount(
         <Portal trigger={<button />} defaultOpen closeOnTriggerClick>
           <p />
-        </Portal>
+        </Portal>,
       )
 
       wrapper.find('button').simulate('click')
@@ -304,7 +308,7 @@ describe('Portal', () => {
       wrapperMount(
         <Portal trigger={<button />} defaultOpen closeOnTriggerMouseLeave mouseLeaveDelay={0}>
           <p />
-        </Portal>
+        </Portal>,
       )
 
       document.body.lastElementChild.should.equal(wrapper.instance().rootNode)
@@ -333,7 +337,7 @@ describe('Portal', () => {
       wrapperMount(
         <Portal trigger={<button />} defaultOpen closeOnPortalMouseLeave mouseLeaveDelay={0}>
           <p />
-        </Portal>
+        </Portal>,
       )
 
       document.body.lastElementChild.should.equal(wrapper.instance().rootNode)
@@ -350,7 +354,7 @@ describe('Portal', () => {
     it('closes the portal on trigger mouseleave even when portal receives mouseenter within limit', (done) => {
       const delay = 10
       wrapperMount(
-        <Portal trigger={<button />} defaultOpen closeOnTriggerMouseLeave mouseLeaveDelay={delay}><p /></Portal>
+        <Portal trigger={<button />} defaultOpen closeOnTriggerMouseLeave mouseLeaveDelay={delay}><p /></Portal>,
       )
 
       wrapper.find('button').simulate('mouseleave')
@@ -378,7 +382,7 @@ describe('Portal', () => {
           mouseLeaveDelay={delay}
         >
           <p />
-        </Portal>
+        </Portal>,
       )
 
       wrapper.find('button').simulate('mouseleave')

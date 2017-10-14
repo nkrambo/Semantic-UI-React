@@ -1,5 +1,6 @@
 import cx from 'classnames'
-import React, { PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React from 'react'
 
 import {
   customPropTypes,
@@ -26,7 +27,7 @@ function Comment(props) {
   const classes = cx(
     useKeyOnly(collapsed, 'collapsed'),
     'comment',
-    className
+    className,
   )
   const rest = getUnhandledProps(Comment, props)
   const ElementType = getElementType(Comment, props)

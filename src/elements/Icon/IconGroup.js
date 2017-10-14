@@ -1,6 +1,7 @@
 import cx from 'classnames'
 import _ from 'lodash'
-import React, { PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React from 'react'
 
 import {
   customPropTypes,
@@ -18,7 +19,7 @@ function IconGroup(props) {
   const classes = cx(
     size,
     'icons',
-    className
+    className,
   )
   const rest = getUnhandledProps(IconGroup, props)
   const ElementType = getElementType(IconGroup, props)

@@ -1,20 +1,17 @@
-const _ = require('lodash')
-const gutil = require('gulp-util')
-const docgen = require('react-docgen')
-const doctrine = require('doctrine')
-const through = require('through2')
-const path = require('path')
+import gutil from 'gulp-util'
+import _ from 'lodash'
+import path from 'path'
+import { defaultHandlers, parse } from 'react-docgen'
+import through from 'through2'
 
-module.exports = (filename) => {
+import { parseDefaultValue, parseDocBlock, parserCustomHandler, parseType } from './util'
+
+export default (filename) => {
   const defaultFilename = 'docgenInfo.json'
   const result = {}
   const pluginName = 'gulp-react-docgen'
   let finalFile
   let latestFile
-
-  function parseDocBlock(docBlock) {
-    return doctrine.parse(docBlock || '', { unwrap: true })
-  }
 
   function bufferContents(file, enc, cb) {
     latestFile = file
@@ -31,17 +28,31 @@ module.exports = (filename) => {
 
     try {
       const relativePath = file.path.replace(`${process.cwd()}/`, '')
-      const parsed = docgen.parse(file.contents)
+      const parsed = parse(file.contents, null, [
+        ...defaultHandlers,
+        parserCustomHandler,
+      ])
 
       // replace the component`description` string with a parsed doc block object
       parsed.docBlock = parseDocBlock(parsed.description)
       delete parsed.description
 
-      // replace prop `description` strings with a parsed doc block object
+      // replace prop `description` strings with a parsed doc block object and updated `type`
       _.each(parsed.props, (propDef, propName) => {
-        parsed.props[propName].docBlock = parseDocBlock(propDef.description)
-        delete parsed.props[propName].description
+        const { description, tags } = parseDocBlock(propDef.description)
+        const { name, value } = parseType(propDef)
+
+        parsed.props[propName] = {
+          ...propDef,
+          description,
+          tags,
+          value,
+          defaultValue: parseDefaultValue(propDef),
+          name: propName,
+          type: name,
+        }
       })
+      parsed.props = _.sortBy(parsed.props, 'name')
 
       result[relativePath] = parsed
 

@@ -1,5 +1,6 @@
 import cx from 'classnames'
-import React, { PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React from 'react'
 
 import {
   customPropTypes,
@@ -30,7 +31,7 @@ function LabelGroup(props) {
     useKeyOnly(circular, 'circular'),
     useKeyOnly(tag, 'tag'),
     'labels',
-    className
+    className,
   )
   const rest = getUnhandledProps(LabelGroup, props)
   const ElementType = getElementType(LabelGroup, props)

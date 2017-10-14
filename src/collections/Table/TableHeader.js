@@ -1,5 +1,6 @@
 import cx from 'classnames'
-import React, { PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React from 'react'
 
 import {
   customPropTypes,
@@ -16,7 +17,7 @@ function TableHeader(props) {
   const { children, className, fullWidth } = props
   const classes = cx(
     useKeyOnly(fullWidth, 'full-width'),
-    className
+    className,
   )
   const rest = getUnhandledProps(TableHeader, props)
   const ElementType = getElementType(TableHeader, props)

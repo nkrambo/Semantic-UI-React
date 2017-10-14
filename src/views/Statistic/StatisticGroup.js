@@ -1,8 +1,10 @@
 import cx from 'classnames'
 import _ from 'lodash'
-import React, { PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React from 'react'
 
 import {
+  childrenUtils,
   customPropTypes,
   getElementType,
   getUnhandledProps,
@@ -41,13 +43,13 @@ function StatisticGroup(props) {
   const rest = getUnhandledProps(StatisticGroup, props)
   const ElementType = getElementType(StatisticGroup, props)
 
-  if (!_.isNil(children)) return <ElementType {...rest} className={classes}>{children}</ElementType>
+  if (!childrenUtils.isNil(children)) return <ElementType {...rest} className={classes}>{children}</ElementType>
 
-  const itemsJSX = _.map(items, item => (
-    <Statistic key={item.childKey || [item.label, item.title].join('-')} {...item} />
-  ))
-
-  return <ElementType {...rest} className={classes}>{itemsJSX}</ElementType>
+  return (
+    <ElementType {...rest} className={classes}>
+      {_.map(items, item => Statistic.create(item))}
+    </ElementType>
+  )
 }
 
 StatisticGroup._meta = {

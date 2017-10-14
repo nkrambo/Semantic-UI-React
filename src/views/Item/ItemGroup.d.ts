@@ -1,5 +1,8 @@
 import * as React from 'react';
 
+import { SemanticShorthandCollection } from '../..';
+import { ItemProps } from './Item';
+
 export interface ItemGroupProps {
   [key: string]: any;
 
@@ -16,13 +19,16 @@ export interface ItemGroupProps {
   divided?: boolean;
 
   /** Shorthand array of props for Item. */
-  items?: Array<any>;
+  items?: SemanticShorthandCollection<ItemProps>;
 
   /** An item can be formatted so that the entire contents link to another page. */
   link?: boolean;
 
   /** A group of items can relax its padding to provide more negative space. */
   relaxed?: boolean | 'very';
+
+  /** Prevent items from stacking on mobile. */
+  unstackable?: boolean;
 }
 
 declare const ItemGroup: React.StatelessComponent<ItemGroupProps>;

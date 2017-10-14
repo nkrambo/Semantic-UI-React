@@ -1,9 +1,11 @@
 import cx from 'classnames'
 import _ from 'lodash'
-import React, { Component, PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React, { Component } from 'react'
 
 import {
-  createShorthand,
+  childrenUtils,
+  createHTMLDivision,
   customPropTypes,
   getElementType,
   getUnhandledProps,
@@ -78,11 +80,7 @@ class Progress extends Component {
     /** A progress bar can show a success state. */
     success: PropTypes.bool,
 
-    /**
-     * For use with value.
-     * Together, these will calculate the percent.
-     * Mutually excludes percent.
-     */
+    /** For use with value. Together, these will calculate the percent. Mutually excludes percent. */
     total: customPropTypes.every([
       customPropTypes.demand(['value']),
       customPropTypes.disallow(['percent']),
@@ -92,9 +90,7 @@ class Progress extends Component {
       ]),
     ]),
 
-    /**
-     * For use with total. Together, these will calculate the percent. Mutually excludes percent.
-     */
+    /** For use with total. Together, these will calculate the percent. Mutually excludes percent. */
     value: customPropTypes.every([
       customPropTypes.demand(['total']),
       customPropTypes.disallow(['percent']),
@@ -117,7 +113,7 @@ class Progress extends Component {
     const { percent, total, value } = this.props
 
     if (!_.isUndefined(percent)) return percent
-    if (!_.isUndefined(total) && !_.isUndefined(value)) return value / total * 100
+    if (!_.isUndefined(total) && !_.isUndefined(value)) return (value / total) * 100
   }
 
   getPercent = () => {
@@ -137,11 +133,11 @@ class Progress extends Component {
   renderLabel = () => {
     const { children, label } = this.props
 
-    if (!_.isNil(children)) return <div className='label'>{children}</div>
-    return createShorthand('div', val => ({ children: val }), label, { className: 'label' })
+    if (!childrenUtils.isNil(children)) return <div className='label'>{children}</div>
+    return createHTMLDivision(label, { defaultProps: { className: 'label' } })
   }
 
-  renderProgress = percent => {
+  renderProgress = (percent) => {
     const {
       precision,
       progress,
@@ -192,7 +188,7 @@ class Progress extends Component {
     const percent = this.getPercent()
 
     return (
-      <ElementType {...rest} className={classes}>
+      <ElementType {...rest} className={classes} data-percent={Math.floor(percent)}>
         <div className='bar' style={{ width: `${percent}%` }}>
           {this.renderProgress(percent)}
         </div>

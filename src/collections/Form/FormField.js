@@ -1,6 +1,7 @@
 import cx from 'classnames'
 import _ from 'lodash'
-import React, { createElement, PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React, { createElement } from 'react'
 
 import {
   createHTMLLabel,
@@ -24,7 +25,7 @@ import Radio from '../../addons/Radio'
  * @see Input
  * @see Radio
  * @see Select
- * @see TextArea
+ * @see Visibility
  */
 function FormField(props) {
   const {
@@ -65,7 +66,7 @@ function FormField(props) {
   // ----------------------------------------
   // Checkbox/Radio Control
   // ----------------------------------------
-  const controlProps = { ...rest, children, required, type }
+  const controlProps = { ...rest, children, disabled, required, type }
 
   // wrap HTML checkboxes/radios in the label
   if (control === 'input' && (type === 'checkbox' || type === 'radio')) {
@@ -93,7 +94,9 @@ function FormField(props) {
 
   return (
     <ElementType className={classes}>
-      {createHTMLLabel(label)}
+      {createHTMLLabel(label, { defaultProps: {
+        htmlFor: _.get(controlProps, 'id') },
+      })}
       {createElement(control, controlProps)}
     </ElementType>
   )

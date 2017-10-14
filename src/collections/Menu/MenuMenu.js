@@ -1,5 +1,6 @@
 import cx from 'classnames'
-import React, { PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React from 'react'
 
 import {
   customPropTypes,
@@ -41,8 +42,8 @@ MenuMenu.propTypes = {
   /** Additional classes. */
   className: PropTypes.string,
 
-  /** A sub menu can take right position. */
-  position: PropTypes.oneOf(['right']),
+  /** A sub menu can take left or right position. */
+  position: PropTypes.oneOf(['left', 'right']),
 }
 
 export default MenuMenu

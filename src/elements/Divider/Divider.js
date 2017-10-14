@@ -1,5 +1,6 @@
 import cx from 'classnames'
-import React, { PropTypes } from 'react'
+import PropTypes from 'prop-types'
+import React from 'react'
 
 import {
   customPropTypes,
@@ -35,7 +36,7 @@ function Divider(props) {
     useKeyOnly(section, 'section'),
     useKeyOnly(vertical, 'vertical'),
     'divider',
-    className
+    className,
   )
   const rest = getUnhandledProps(Divider, props)
   const ElementType = getElementType(Divider, props)
